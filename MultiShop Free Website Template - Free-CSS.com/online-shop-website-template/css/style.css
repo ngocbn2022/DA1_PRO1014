@@ -13944,8 +13944,6 @@ h6 {
   padding: 30px;
 }
 
-
-
 .btn.btn-primary {
   color: #3D464D !important;
 }
@@ -14184,41 +14182,4 @@ h6 {
   100% {
     transform: translateY(-15px);
   }
-}
-.header {
-  z-index: 2;
-}
-.cartlike {
-  color: #fff;
-  text-align: center;
-}
-.cartlike:hover {
-  color: #FFD333;
-}
-.login-text span{
-  text-align: center;
-  color: #000;
-  padding: 5px 30px;
-}
-.login-text {
-}
-.login-text:hover span{
-  color: #edbb09;
-}
-.user-menu {
-  position: relative;
-}
-
-.user-menuSecond {
-  background-color: rgba(255, 255, 255, 0.8);
-  position: absolute;
-  opacity: 0;
-  z-index: 3;
-  padding: 0;
-  list-style: none;
-  transition: 0.2s ease-in-out;
-}
-
-.user-menu:hover .user-menuSecond{
-  opacity: 1;
 }
