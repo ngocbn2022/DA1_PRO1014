@@ -22,15 +22,16 @@
     $(window).scroll(function () {
         const menu = document.querySelector(".header");
         const scrollY = window.scrollY;
-        if (scrollY >= 100) {
+        if (scrollY >= 450) {
             menu.style.position = "fixed"; // Sử dụng thuộc tính .style để thiết lập kiểu dáng
             menu.style.top = "0";
             menu.style.width = "100%";
-        } 
+        } else if (scrollY > 0 && scrollY < 450){
+            menu.style.top = "-300px";
+        }
         else {
             menu.style.position = ""; // Sử dụng thuộc tính .style để thiết lập kiểu dáng
             menu.style.top = "";
-            
         }
     });
     // Back to top button
