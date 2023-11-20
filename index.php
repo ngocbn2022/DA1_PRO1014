@@ -2,15 +2,14 @@
 ob_start();
 session_start();
 include "global.php";
-include "model/pdo.php";
-include "model/category.php";
-include "model/product.php";
-include "model/account.php";
-include "model/validate.php";
+include "./model/pdo.php";
+include "./model/category.php";
+include "./model/product.php";
+include "./model/account.php";
+include "./model/comment.php";
 $listCategories = listCategories();
 $listProduct_new_home = listProduct_new_home();
 $listProduct_view_home = listProduct_view_home();
-$listProduct_star_home = listProduct_star_home();
 include "view/header.php";
 if (isset($_GET['act']) && $_GET['act'] != "") {
     $act = $_GET['act'];
@@ -18,19 +17,22 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
         case 'home':
             include "view/home.php";
             break;
+        case 'admin':
+            header("Location: admin/index.php");
+            break;
         case 'register':
             if (isset($_POST['dangky'])) {
                 $accounts = account_all();
-                $username = $_POST['username'];
+                $user_name = $_POST['username'];
                 $password = $_POST['password'];
                 $email = $_POST['email'];
-                $numberphone = $_POST['numberphone'];
+                $phone = $_POST['numberphone'];
                 $address = $_POST['address'];
                 $comfirm = $_POST['comfirm'];
                 $pattern_phone = '/^(03[2-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/';
                 $pattern_email = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
                 $index = 0;
-                if (isset($username) && $username == "") {
+                if (isset($user_name) && $user_name == "") {
                     $index++;
                     $error1 = '* Vui lòng nhập tên tài khoản';
                 }
@@ -45,7 +47,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $index++;
                     $error3 = "* Email không hợp lệ";
                 }
-                if (!preg_match($pattern_phone, $numberphone)) { // check không đúng định dạng
+                if (!preg_match($pattern_phone, $phone)) { // check không đúng định dạng
                     $index++;
                     $error4 = "* Số điện thoại không hợp lệ";
                 }
@@ -63,7 +65,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $error7 = 'Xác nhận mật khẩu sai';
                 }
                 foreach ($accounts as $account) {
-                    if ($username == $account['user_name']) {
+                    if ($user_name == $account['user_name']) {
                         $index++;
                         $error1 = '* Tên tài khoản đã tồn tại';
                     }
@@ -71,12 +73,13 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $index++;
                         $error3 = '* Email đã tồn tại';
                     }
-                    if ($numberphone == $account['phone']) {
+                    if ($phone == $account['phone']) {
                         $index++;
                         $error4 = '* Số điện thoại đã tồn tại';
                     }
                 }
                 if ($index == 0) {
+                    register($user_name, $password, $email, $phone, $address);
                     header("Location: index.php?act=login&dangkytc");
                 }
             }
@@ -84,7 +87,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
         case 'login':
             if (isset($_POST['dangnhap'])) {
-                echo $_SESSION['user_name'];
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $account = login($username, $password);
@@ -113,6 +115,30 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
         case 'misspassword':
             include "view/login/misspassword.php";
             break;
+        case 'changepassword':
+            if (isset($_POST['changepassword'])) {
+                $password = $_POST['password'];
+                $newpassword = $_POST['newpassword'];
+                $comfirm = $_POST['comfirm'];
+                $user_id = $_SESSION['user_id'];
+                $taikhoan = load_account($user_id, $password);
+                if (isset($taikhoan) && $taikhoan) {
+                    if (strlen($newpassword) > 6) {
+                        if ($newpassword == $comfirm) {
+                            changepassword($user_id, $newpassword);
+                            header("Location: index.php?act=changepassword&changepasswordtc");
+                        } else {
+                            $error1 = 'Xác nhận mật khẩu không chính xác';
+                        }
+                    } else {
+                        $error1 = 'Vui lòng nhập mật khẩu mới dài hơn 6 ký tự';
+                    }
+                } else {
+                    $error2 = 'Mật khẩu không chính xác';
+                }
+            }
+            include "view/info/changepassword.php";
+            break;
         case 'product':
             if (isset($_POST['keyword']) &&  $_POST['keyword'] != 0) {
                 $keyword = $_POST['keyword'];
@@ -129,19 +155,52 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             } else {
                 $category_id = 0;
             }
-            if (isset($_GET['trang']) && ($_GET['trang'] > 0)) {
-                $trang = $_GET['trang'] - 1;
+            if (isset($_GET['page']) && ($_GET['page'] > 0)) {
+                $trang = $_GET['page'] - 1;
             } else {
                 $trang = 0;
             }
-            $listProduct = listProduct($category_id, $keyword,$trang, $sapxep);
+            $listProduct = listProduct($category_id, $keyword, $trang, $sapxep);
             include "view/product.php";
             break;
         case 'cart':
+            $product_id = $_POST['product_id'];
+            $product_name = $_POST['product_name'];
+            $image = $_POST['image'];
+            $price = $_POST['price'];
+            $size = $_POST['selectedsize'];
+            $color = $_POST['selectedcolor'];
+            $quantity = $_POST['quantity'];
+            echo $product_id;
+            echo $product_name;
+            echo $image;
+            echo $price;
+            echo $size;
+            echo $color;
+            echo $quantity;
             include "view/cart.php";
             break;
         case 'detailProduct':
-
+            if (isset($_GET['product_id']) && ($_GET['product_id'] > 0)) {
+                $_SESSION['product_id'] = $_GET['product_id'];
+                $product_id = $_GET['product_id'];
+                $product = product_one($product_id);
+                $comments = comments($product_id);
+            }
+            include "view/detailProduct.php";
+            break;
+        case 'info':
+            $user_id = $_SESSION['user_id'];
+            $account = load_account_info($user_id);
+            include "view/info/info.php";
+            break;
+        case 'changeinfo':
+            $user_id = $_SESSION['user_id'];
+            $account = load_account_info($user_id);
+            include "view/info/changeinfo.php";
+            break;
+        case 'oders':
+            include "view/info/oderinfo.php";
             break;
     }
 } else {

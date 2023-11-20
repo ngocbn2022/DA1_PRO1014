@@ -29,3 +29,23 @@
         });
     </script>
 <?php } ?>
+<?php if (isset($_GET['changepasswordtc'])) { ?>
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Đổi mật khẩu thành công",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+<?php } ?>
+<?php if (isset($_GET['changinfotc'])) { ?>
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Thay đổi thông tin thành công",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+<?php } ?>

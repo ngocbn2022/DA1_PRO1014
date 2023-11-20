@@ -1,43 +1,85 @@
+<?php extract($product); ?>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+                        <img class="w-100 h-100" src="<?= $dirt . $product_image ?>" alt="Image">
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                    <i class="fa fa-2x fa-angle-left text-dark"></i>
-                </a>
-                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                    <i class="fa fa-2x fa-angle-right text-dark"></i>
-                </a>
             </div>
         </div>
 
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
-                <h3>Product Name Goes Here</h3>
-                <div class="d-flex mb-3">
-                    <div class="text-warning mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
-                    </div>
-                    <small class="pt-1">(99 Reviews)</small>
+                <h3><?= $product_name ?></h3>
+                <div class="d-flex align-items-center mb-1">
+                    <?php if ($avg_star <= 1.2) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 1.7) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 2.2) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 2.7) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 3.2) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 3.7) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 4.2) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="far fa-star text-warning mr-1"></small>
+                    <?php } else if ($avg_star <= 4.7) { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                    <?php } else { ?>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                        <small class="fa fa-star text-warning mr-1"></small>
+                    <?php } ?>
+                    <small>(<?= $total_star ?> Đánh giá)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4 text-danger">$150.00</h3>
-                <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                    clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                    Nonumy</p>
+                <h3 class="font-weight-semi-bold mb-4 text-danger">Giá: <?= $price ?></h3>
+                <strong class="text-dark mr-3">Mô tả:</strong>
+                <p class="mb-4"><?= $description ?></p>
                 <div class="d-flex mb-3">
                     <strong class="text-dark mr-3">Kích cỡ:</strong>
                     <form class="ps-1">
                         <div class="custom-control custom-radio custom-control-inline ">
-                            <input type="radio" class="custom-control-input" id="size-1" name="size">
+                            <input type="radio" class="custom-control-input" id="size-1" name="size" value="XS">
                             <label class="custom-control-label" for="size-1">XS</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
@@ -62,7 +104,7 @@
                     <strong class="text-dark mr-3">Màu sắc:</strong>
                     <form class="ps-1">
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-1" name="color">
+                            <input type="radio" class="custom-control-input" id="color-1" name="color" value="Black">
                             <label class="custom-control-label" for="color-1">Black</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
@@ -81,6 +123,7 @@
                             <input type="radio" class="custom-control-input" id="color-5" name="color">
                             <label class="custom-control-label" for="color-5">Green</label>
                         </div>
+
                     </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
@@ -91,7 +134,7 @@
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control form-control-sm border border-1 border-primary text-center" value="1">
+                        <input type="text" class="form-control form-control-sm border border-1 border-primary text-center" name="quantity" value="1">
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-outline-primary btn-plus">
                                 <i class="fa fa-plus"></i>
@@ -100,9 +143,32 @@
                     </div>
                 </div>
                 <div class="button-cart d-flex justify-content-center">
-                    <button class="btn btn-outline-primary px-3  mx-2"><i class="fa fa-shopping-cart mr-1 pe-1"></i>Thêm giỏ hàng</button>
-                    <button class="btn btn-danger px-3  mx-2"><i class="fa fa-shopping-cart mr-1 pe-1"></i>Đặt
-                        hàng</button>
+                    <form class="button-cart d-flex justify-content-center" method="POST" action="index.php?act=cart">
+                        <input type="hidden" name="product_id" value="<?= $product_id ?>">
+                        <input type="hidden" name="product_name" value="<?= $product_name ?>">
+                        <input type="hidden" name="image" value="<?= $product_image ?>">
+                        <input type="hidden" name="price" value="<?= number_format($price, 0, ',', '.'); ?>">
+                        <input type="hidden" id="selectedSize" name="selectedsize" value="">
+                        <input type="hidden" id="selectedColor" name="selectedcolor" value="">
+                        <input type="hidden" id="selectedQuantity" name="quantity" value="">
+                        <button class="btn btn-outline-primary px-3  mx-2" type="submit">
+                            <i class="fa fa-shopping-cart mr-1 pe-1"></i>
+                            Thêm giỏ hàng
+                        </button>
+                    </form>
+                    <form class="button-cart d-flex justify-content-center" method="POST" action="index.php?act=order">
+                        <input type="hidden" name="product_id" value="<?= $product_id ?>">
+                        <input type="hidden" name="product_name" value="<?= $product_name ?>">
+                        <input type="hidden" name="image" value="<?= $product_image ?>">
+                        <input type="hidden" name="price" value="<?= $price ?>">
+                        <input type="hidden" id="selectedSize" name="selectedsize" value="">
+                        <input type="hidden" id="selectedColor" name="selectedcolor" value="">
+                        <input type="hidden" id="selectedQuantity" name="quantity" value="">
+                        <button class="btn btn-danger px-3  mx-2" type="submit">
+                            <i class="fa fa-shopping-cart mr-1 pe-1"></i>
+                            Đặt hàng
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -111,53 +177,39 @@
         <div class="col">
             <div class="bg-light p-30">
                 <div class="nav nav-tabs mb-4">
-                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
-                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Đánh giá (0)</a>
+                    <a class="nav-item nav-link text-dark active" href="#tab-pane-3">Đánh giá (0)</a>
                 </div>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">Mô tả sản phẩm</h4>
-                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam
-                            invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod
-                            consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum
-                            diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam
-                            sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor
-                            aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam
-                            kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.
-                        </p>
-                        <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor
-                            consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita
-                            clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit
-                            rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.
-                        </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="tab-pane-3">
+                <div>
+                    <div>
                         <div class="row">
                             <div class="col-md-8">
-                                <iframe src="reviews.html" frameborder="1" width="100%" height="100%"></iframe>
+                                <iframe src="view/review.php" frameborder="1" width="100%" height="100%"></iframe>
                             </div>
                             <div class="col-md-4">
-                                <h4 class="mb-4">Để lại đánh giá</h4>
-                                <div class="d-flex my-3">
-                                    <p class="mb-0 mr-2">Đánh giá của bạn :</p>
-                                    <div class="text-warning">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                <?php if (isset($_SESSION['user_name']) && $_SESSION['user_name'] != "") { ?>
+                                    <h4 class="mb-4">Để lại đánh giá của bạn</h4>
+                                    <div class="d-flex my-3">
+                                        <p class="mb-0 mr-2">Đánh giá của bạn :</p>
+                                        <div class="text-warning">
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="message">Nội dung: </label>
-                                        <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Gửi đánh giá" class="btn btn-outline-primary px-3 mt-2">
-                                    </div>
-                                </form>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="message">Nội dung: </label>
+                                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <input type="submit" value="Gửi đánh giá" class="btn btn-outline-primary px-3 mt-2">
+                                        </div>
+                                    </form>
+                                <?php } else { ?>
+                                    <h4>Bạn phải đăng nhập mới có thể bình luận? <a href="index.php?act=login">Đăng nhập</a></h4>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -60,7 +60,7 @@
                         <div class="navbar-nav w-100">
                             <?php foreach ($listCategories as $category) {
                                 extract($category); ?>
-                                <a href="index.php?act=product&category_id=<?=$category_id?>" class="nav-item nav-link menu-second"><?= $category_name ?></a>
+                                <a href="index.php?act=product&category_id=<?= $category_id ?>" class="nav-item nav-link menu-second"><?= $category_name ?></a>
                             <?php } ?>
                         </div>
                     </nav>
@@ -76,7 +76,7 @@
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="index.php?act=home" class="nav-item nav-link">Trang chủ</a>
-                                <a href="index.php?act=product" class="nav-item nav-link">Sản phẩm</a>
+                                <a href="index.php?act=product&page=1" class="nav-item nav-link">Sản phẩm</a>
                                 <a href="detail.html" class="nav-item nav-link">Tin tức</a>
                                 <a href="contact.html" class="nav-item nav-link">Hỗ trợ</a>
                             </div>
@@ -86,15 +86,21 @@
                                         <span class="badge navbar-badge rounded-circle align-items-center ps-0 py-3" style="margin: auto;">Xin chào, <?= $_SESSION['user_name']; ?></span>
                                         <ul class="user-menuSecond">
                                             <li>
-                                                <a href="index.php?act=login" class="btn flex px-0 login-text">
+                                                <a href="index.php?act=info" class="btn flex px-0 login-text">
                                                     <span class="badge navbar-badge  rounded-circle align-items-center justify-content-center" style="margin: auto;">Tài khoản</span>
                                                 </a>
                                             </li>
+                                            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) { ?>
+                                                <li>
+                                                    <a href="index.php?act=admin" class="btn flex px-0 login-text">
+                                                        <span class="badge navbar-badge  rounded-circle align-items-center justify-content-center" style="margin: auto;">Admin</span>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
                                             <li>
                                                 <a href="index.php?act=logout" class="btn flex px-0 login-text">
                                                     <span class="badge navbar-badge rounded-circle align-items-center justify-content-center" style="margin: auto;">Đăng xuất</span>
                                                 </a>
-
                                             </li>
                                         </ul>
                                     <?php } else { ?>

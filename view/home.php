@@ -109,6 +109,7 @@
     <div class="row px-xl-5 pb-3">
         <?php foreach ($listCategories as $category) {
             extract($category);
+            $quantityproduct = count_product($category_id);
         ?>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <a class="text-decoration-none" href="index.php?act=product&idcate=<?= $category_id ?>">
@@ -118,7 +119,7 @@
                         </div>
                         <div class="flex-fill pl-3 ps-1">
                             <h6><?= $category_name ?></h6>
-                            <small class="text-body">100 Products</small>
+                            <small class="text-body"><?=$quantityproduct['quantityProduct']?> Products</small>
                         </div>
                     </div>
                 </a>
@@ -143,14 +144,13 @@
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href=""><?= $product_name ?></a>
+                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><?= $product_name ?></a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5><?= $price ?></h5>
+                                <h5><?= number_format($price, 0, ',', '.'); ?></h5>
                                 <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
@@ -227,7 +227,7 @@
     <div class="col-lg-12">
         <h5 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-light pr-3">Top Sản
                 phẩm
-                nhiều lượt xem</span></h5>
+                có lượt bán nhiều nhất</span></h5>
         <div class="row px-xl-5">
             <?php foreach ($listProduct_view_home as $productView) {
                 extract($productView);
@@ -237,14 +237,13 @@
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href=""><?= $product_name ?></a>
+                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><?= $product_name ?></a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5><?= $price ?></h5>
+                                <h5><?= number_format($price, 0, ',', '.'); ?></h5>
                                 <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
@@ -317,90 +316,3 @@
 </div>
 <!-- Products End -->
 
-<!-- Products Start -->
-<div class="container-fluid pt-5 pb-3">
-    <h5 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-light pr-3">Top sản phẩm
-            đánh giá cao nhất</span></h5>
-    <div class="row px-xl-5">
-        <?php foreach ($listProduct_star_home as $productStar) {
-            extract($productStar);
-        ?>
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4 border">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href=""><?= $product_name ?></a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5><?= $price ?></h5>
-                            <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <?php if ($avg_star <= 1.2) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 1.7) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 2.2) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 2.7) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 3.2) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 3.7) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 4.2) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="far fa-star text-warning mr-1"></small>
-                            <?php } else if ($avg_star <= 4.7) { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                            <?php } else { ?>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                                <small class="fa fa-star text-warning mr-1"></small>
-                            <?php } ?>
-                            <small>(<?= $total_star ?>)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php } ?>
-    </div>
-</div>

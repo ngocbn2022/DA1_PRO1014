@@ -3,39 +3,19 @@
         <!-- Shop Sidebar Start -->
         <div class="col-lg-3 col-md-4">
             <!-- Price Start -->
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by price</span></h5>
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Lọc sản phẩm</span></h5>
             <div class="bg-light p-4 mb-30">
                 <form>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                        <span class="badge border font-weight-normal">1000</span>
+                        <h4 class="custom-control-label" for="price-all">Theo giá</h4>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">$0 - $100</label>
-                        <span class="badge border font-weight-normal">150</span>
+                        <a href="<?= $url . '&sapxep=sapxeptheogiagiamdan'?>">Giá giảm dần</a>
                     </div>
                     <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">$100 - $200</label>
-                        <span class="badge border font-weight-normal">295</span>
+                        <a href="<?= $url . '&sapxep=sapxeptheogiatangdan'?>">Giá tăng dần</a>
                     </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$200 - $300</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4">
-                        <label class="custom-control-label" for="price-4">$300 - $400</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5">
-                        <label class="custom-control-label" for="price-5">$400 - $500</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
+
                 </form>
             </div>
             <!-- Price End -->
@@ -130,15 +110,14 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="text-center py-4">
-                                <a class="h6 text-decoration-none text-truncate" href=""><?= $product_name ?></a>
+                                <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><?= $product_name ?></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5><?= $price ?></h5>
-                                    <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
+                                    <h5><?= number_format($price, 0, ',', '.'); ?></h5>
+                                    <h6 class="text-muted ml-2"><del><?= number_format($price, 0, ',', '.'); ?></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
                                     <?php if ($avg_star <= 1.2) { ?>
@@ -205,9 +184,15 @@
                 <div class="col-12">
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <?php for ($index = 1; $index <= 5; $index++) {
+                                if (isset($_GET['page'])) {
+                                    if ($_GET['page'] == $index) { ?>
+                                        <li class="page-item active"><a class="page-link" href="<?= $url . '&page=' . $index ?>"><?= $index ?></a></li>
+                                    <?php } else { ?>
+                                        <li class="page-item"><a class="page-link" href="<?= $url . '&page=' . $index ?>"><?= $index ?></a></li>
+                            <?php  }
+                                }
+                            } ?>
                         </ul>
                     </nav>
                 </div>
