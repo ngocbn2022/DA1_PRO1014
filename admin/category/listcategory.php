@@ -23,19 +23,18 @@
                     <tbody>
                         <?php foreach ($listCategories as $category) {
                             extract($category);
-                            ?>
-                        <tr>
-                            <th scope="row"><?=$category_id?></th>
-                            <td><?=$category_name?></td>
-                            <td>
-                                <img src="<?='../' . $dirt .'categories/'. $category_image?>" alt="" width="50px">
-                            </td>
-                            <td>
-                                <a href=""><button type="button" class="btn btn-success">Sửa</button></a>
-                                <a href=""><button type="button" class="btn btn-danger" onclick="return confim();">Xóa</button></a>
-                            </td>
-                        </tr>
-                        <?php }?>
+                        ?>
+                            <tr>
+                                <th scope="row"><?= $category_id ?></th>
+                                <td><?= $category_name ?></td>
+                                <td>
+                                    <img src="<?= '../' . $dirt . 'categories/' . $category_image ?>" alt="" width="50px">
+                                </td>
+                                <td>
+                                    <a href="index.php?act=updatecategory&category_id=<?= $category_id ?>"><button type="button" class="btn btn-success">Sửa</button></a>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

@@ -107,19 +107,24 @@
         <span class="bg-light pr-3">Danh mục</span>
     </h5>
     <div class="row px-xl-5 pb-3">
-        <?php foreach ($listCategories as $category) {
+        <?php
+
+
+
+        foreach ($listCategories as $category) {
             extract($category);
             $quantityproduct = count_product($category_id);
+
         ?>
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="index.php?act=product&idcate=<?= $category_id ?>">
+                <a class="text-decoration-none" href="index.php?act=product&category_id=<?= $category_id ?>">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 100px; height: 100px;">
                             <img class="img-fluid" src="<?= $dirt . 'categories/' . $category_image ?>" alt="">
                         </div>
                         <div class="flex-fill pl-3 ps-1">
                             <h6><?= $category_name ?></h6>
-                            <small class="text-body"><?=$quantityproduct['quantityProduct']?> Products</small>
+                            <small class="text-body"><?= $quantityproduct['quantityProduct'] ?> Products</small>
                         </div>
                     </div>
                 </a>
@@ -138,23 +143,37 @@
         <div class="row px-xl-5">
             <?php foreach ($listProduct_new_home as $productNew) {
                 extract($productNew);
+                $rate = select_avg_rate($product_id);
+                if (!empty($rate['avg_star']) && !empty($rate['total_star'])) {
+                    $avg_star = $rate['avg_star'];
+                    $total_star = $rate['total_star'];
+                } else {
+                    $avg_star = 0;
+                    $total_star = 0;
+                }
             ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                     <div class="product-item bg-light mb-4 border">
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?= $product_id ?>"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><?= $product_name ?></a>
+                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?= $product_id ?>"><?= $product_name ?></a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5><?= number_format($price, 0, ',', '.'); ?></h5>
                                 <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
-                                <?php if ($avg_star <= 1.2) { ?>
+                                <?php if ($avg_star < 1) { ?>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 1.2) { ?>
                                     <small class="fa fa-star text-warning mr-1"></small>
                                     <small class="far fa-star text-warning mr-1"></small>
                                     <small class="far fa-star text-warning mr-1"></small>
@@ -231,23 +250,37 @@
         <div class="row px-xl-5">
             <?php foreach ($listProduct_view_home as $productView) {
                 extract($productView);
+                $rate = select_avg_rate($product_id);
+                if (!empty($rate['avg_star']) && !empty($rate['total_star'])) {
+                    $avg_star = $rate['avg_star'];
+                    $total_star = $rate['total_star'];
+                } else {
+                    $avg_star = 0;
+                    $total_star = 0;
+                }
             ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                     <div class="product-item bg-light mb-4 border">
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="<?= $dirt . $product_image ?>" alt="">
                             <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href="index.php?act=detailProduct&product_id=<?= $product_id ?>"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?=$product_id?>"><?= $product_name ?></a>
+                            <a class="h6 text-decoration-none text-truncate" href="index.php?act=detailProduct&product_id=<?= $product_id ?>"><?= $product_name ?></a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5><?= number_format($price, 0, ',', '.'); ?></h5>
                                 <h6 class="text-muted ml-2"><del><?= $price ?></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
-                                <?php if ($avg_star <= 1.2) { ?>
+                                <?php if ($avg_star < 1) { ?>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 1.2) { ?>
                                     <small class="fa fa-star text-warning mr-1"></small>
                                     <small class="far fa-star text-warning mr-1"></small>
                                     <small class="far fa-star text-warning mr-1"></small>
@@ -315,4 +348,3 @@
     </div>
 </div>
 <!-- Products End -->
-

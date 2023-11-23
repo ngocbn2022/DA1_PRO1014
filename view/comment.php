@@ -20,13 +20,13 @@
     include "../model/pdo.php";
     include "../model/comment.php";
     $product_id = $_SESSION['product_id'];
-    $rates = rates($product_id);
+    $comments = comments($product_id);
     ?>
     <div class="media mb-4 ps-2 pt-2">
-        <?php if (empty($rates)) {?>
-            <span>Hiện chưa có đánh giá nào</span>
-        <?php } foreach ($rates as $rate) {
-            extract($rate);
+    <?php if (empty($comments)) {?>
+            <span>Hiện chưa có bình luận nào</span>
+        <?php } foreach ($comments as $comment) {
+            extract($comment);
         ?>
             <div class="media-body">
                 <h6><?= $username ?><small> - <i><?= $time ?></i></small></h6>

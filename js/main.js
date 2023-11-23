@@ -129,6 +129,11 @@
             // Gán giá trị vào trường input có id="selectedColor"
             $('#selectedColor').val(selectedColor);
         });
+        $('input[name="rate"]').on('change', function () {
+            var selectedRate = $('input[name="rate"]:checked').val();
+            // Gán giá trị vào trường input có id="selectedColor"
+            $('#selectedRate').val(selectedRate);
+        });
         $('input[name="quantity"]').val(1);
         $('#selectedQuantity').val(1);
         // Xử lý sự kiện khi người dùng thay đổi số lượng

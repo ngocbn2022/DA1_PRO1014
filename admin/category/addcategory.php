@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="container pt-5 mt-5">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="index.php?act=addcategory" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Tên danh mục</label>
                         <input type="text" name="category_name" class="form-control" id="exampleFormControlInput1">

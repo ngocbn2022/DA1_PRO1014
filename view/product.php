@@ -103,7 +103,15 @@
         <div class="col-lg-9 col-md-8">
             <div class="row pb-3">
                 <?php foreach ($listProduct as $product) {
-                    extract($product);
+                    extract($product);                
+                    $rate = select_avg_rate($product_id);
+                    if (!empty($rate['avg_star']) && !empty($rate['total_star'])) {
+                        $avg_star = $rate['avg_star'];
+                        $total_star = $rate['total_star'];
+                    } else {
+                        $avg_star = 0;
+                        $total_star = 0;
+                    }
                 ?>
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4 border">
@@ -120,61 +128,67 @@
                                     <h6 class="text-muted ml-2"><del><?= number_format($price, 0, ',', '.'); ?></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <?php if ($avg_star <= 1.2) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 1.7) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 2.2) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 2.7) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 3.2) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 3.7) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 4.2) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="far fa-star text-warning mr-1"></small>
-                                    <?php } else if ($avg_star <= 4.7) { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star-half-alt text-warning mr-1"></small>
-                                    <?php } else { ?>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                        <small class="fa fa-star text-warning mr-1"></small>
-                                    <?php } ?>
+                                <?php if ($avg_star < 1) { ?>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 1.2) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 1.7) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 2.2) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 2.7) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 3.2) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 3.7) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 4.2) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="far fa-star text-warning mr-1"></small>
+                                <?php } else if ($avg_star <= 4.7) { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star-half-alt text-warning mr-1"></small>
+                                <?php } else { ?>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                    <small class="fa fa-star text-warning mr-1"></small>
+                                <?php } ?>
                                     <small>(<?= $total_star ?>)</small>
                                 </div>
                             </div>

@@ -1,3 +1,4 @@
+<?php extract($product); ?>
 <section class="main_content dashboard_part large_header_bg">
     <div class="main_content_iner overly_inner ">
         <div class="container-fluid p-0 ">
@@ -11,39 +12,43 @@
                 </div>
             </div>
             <div class="container pt-5 mt-5">
-                <form action="">
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">ID sản phẩm</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" disabled value="123">
-                    </div>
+                <form action="index.php?act=updateproduct&product_id=<?=$product_id?>" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" value="Sản phẩm 1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="product_name" value="<?= $product_name ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Ảnh sản phẩm</label><br>
-                        <img src="../image/card.jpg" alt="" width="200px" height="250px">
-                        <input type="file" class="form-control mt-3" id="exampleFormControlInput1">
+                        <img src="../image/<?= $product_image ?>" alt="" width="200px" height="250px">
+                        <input type="file" class="form-control mt-3" id="exampleFormControlInput1" name="product_image">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Giá sản phẩm</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" value="Giá sản phẩm 1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="price" value="<?= $price ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Mô tả</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Sản phẩm tuyệt vời</textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"><?= $description ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Danh mục</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Áo polo</option>
-                            <option value="1">Áo chống nắng</option>
-                            <option value="2">Áo phông</option>
-                            <option value="3">Áo khoác</option>
+                        <select class="form-select" aria-label="Default select example" name="category_id">
+                            <?php foreach ($listcategory as $category) {
+                                if ($category_id == $category['category_id']) { ?>
+                                    <option selected value="<?= $category['category_id'] ?>">
+                                        <?= $category['category_name'] ?>
+                                    </option>
+                                <?php } else { ?>
+                                    <option value="<?= $category['category_id'] ?>">
+                                        <?= $category['category_name'] ?>
+                                    </option>
+                            <?php }
+                            } ?>
+
                         </select>
                     </div>
                     <div class="mb-3 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        <button type="submit" class="btn btn-success" name="update_product">Cập nhật</button>
                     </div>
                 </form>
             </div>

@@ -25,18 +25,27 @@
                                 <?php extract($account);
                                 
                                 ?>
-                                <form class="d-flex flex-column p-3" method="POST" action="index.php?act=info">
+                                <form class="d-flex flex-column p-3" method="POST" action="index.php?act=changeinfo">
                                     <div>
                                         <input type="text" class="form-control mt-3" value="<?=$user_name?>" disabled>
                                     </div>
                                     <div>
-                                        <input type="email" class="form-control mt-3" value="<?=$email ?>">
+                                        <input type="email" class="form-control mt-3" value="<?=$email ?>" name="email">
+                                        <?php if (isset($error1)) { ?>
+                                            <span class="register-error ms-1"><?= $error1 ?></span>
+                                        <?php } ?>
                                     </div>
                                     <div>
-                                        <input type="text" class="form-control mt-3" value="0<?=$phone?>" >
+                                        <input type="text" class="form-control mt-3" value="0<?=$phone?>" name="phone">
+                                        <?php if (isset($error2)) { ?>
+                                            <span class="register-error ms-1"><?= $error2 ?></span>
+                                        <?php } ?>
                                     </div>
                                     <div>
-                                        <input type="text" class="form-control mt-3" value="<?=$address?>">
+                                        <input type="text" class="form-control mt-3" value="<?=$address?>" name="address">
+                                        <?php if (isset($error3)) { ?>
+                                            <span class="register-error ms-1"><?= $error3 ?></span>
+                                        <?php } ?>
                                     </div>
                                     <div class="d-flex justify-content-center mt-3">
                                         <button type="submit" class="btn btn-outline-success" name="updateinfo">Cập nhật thông

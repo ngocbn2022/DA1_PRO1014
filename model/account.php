@@ -41,3 +41,10 @@ function changepassword($user_id, $newpassword) {
     $sql = "UPDATE users SET `password` = '$newpassword' WHERE user_id = '$user_id'";
     pdo_execute($sql);
 }
+
+// đổi thông tin user
+
+function changeinfo($user_id, $email, $phone, $address) {
+    $sql = "UPDATE users SET email = '$email', phone = '$phone', `address` = '$address' WHERE  user_id = '$user_id'";
+    pdo_execute($sql);
+}

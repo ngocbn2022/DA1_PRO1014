@@ -11,35 +11,36 @@
                 </div>
             </div>
             <div class="container pt-5 mt-5">
-                <form action="">
+                <form action="index.php?act=addproduct" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="product_name">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Ảnh sản phẩm</label>
-                        <input type="file" class="form-control" id="exampleFormControlInput1">
+                        <input type="file" class="form-control" id="exampleFormControlInput1" name="product_image">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Giá sản phẩm</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="price">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Mô tả</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Danh mục</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Áo polo</option>
-                            <option value="1">Áo chống nắng</option>
-                            <option value="2">Áo phông</option>
-                            <option value="3">Áo khoác</option>
+                        <select class="form-select" aria-label="Default select example" name="category_id">
+                            <?php foreach ($listcategory as $category) {
+                                extract($category);
+                            ?>
+                                <option value="<?= $category_id ?>"><?= $category_name ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     <div class="mb-3 d-flex justify-content-center">
                         <button type="reset" class="btn btn-secondary mx-2">Nhập lại</button>
-                        <button type="submit" class="btn btn-success mx-2">Thêm mới</button>
+                        <button type="submit" class="btn btn-success mx-2" name="add_product">Thêm mới</button>
                     </div>
                 </form>
             </div>

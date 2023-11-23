@@ -33,7 +33,7 @@
                                         <input type="email" class="form-control mt-3" value="<?=$email ?>" disabled>
                                     </div>
                                     <div>
-                                        <input type="text" class="form-control mt-3" value="<?=$phone?>" disabled>
+                                        <input type="text" class="form-control mt-3" value="0<?=$phone?>" disabled>
                                     </div>
                                     <div>
                                         <input type="text" class="form-control mt-3" value="<?=$address?>" disabled>

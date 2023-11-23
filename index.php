@@ -7,6 +7,7 @@ include "./model/category.php";
 include "./model/product.php";
 include "./model/account.php";
 include "./model/comment.php";
+include "./model/variant.php";
 $listCategories = listCategories();
 $listProduct_new_home = listProduct_new_home();
 $listProduct_view_home = listProduct_view_home();
@@ -163,31 +164,57 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             $listProduct = listProduct($category_id, $keyword, $trang, $sapxep);
             include "view/product.php";
             break;
-        case 'cart':
-            $product_id = $_POST['product_id'];
-            $product_name = $_POST['product_name'];
-            $image = $_POST['image'];
-            $price = $_POST['price'];
-            $size = $_POST['selectedsize'];
-            $color = $_POST['selectedcolor'];
-            $quantity = $_POST['quantity'];
-            echo $product_id;
-            echo $product_name;
-            echo $image;
-            echo $price;
-            echo $size;
-            echo $color;
-            echo $quantity;
-            include "view/cart.php";
-            break;
+
         case 'detailProduct':
             if (isset($_GET['product_id']) && ($_GET['product_id'] > 0)) {
                 $_SESSION['product_id'] = $_GET['product_id'];
                 $product_id = $_GET['product_id'];
+                if (isset($_POST['click_sendrate'])) {
+                    $username = $_SESSION['user_name'];
+                    $content = $_POST['content'];
+                    $star = $_POST['rate'];
+                    date_default_timezone_set('Asia/Ho_Chi_Minh'); // set ve gio vietnam
+                    $time = date('Y/m/d');
+                    insert_comment($username, $content, $time, $star, $product_id);
+                    header("Location: " . $url);
+                }
+                $colors = loadall_color($product_id);
+                $sizes = loadall_size($product_id);
+                $rate = select_avg_rate($product_id);
+                $countrate = count_rate($product_id);
+                $countcomment = count_comment($product_id);
                 $product = product_one($product_id);
-                $comments = comments($product_id);
+                $list_product_same = list_product_same($product['category_id'], $product_id);
             }
             include "view/detailProduct.php";
+            break;
+        case 'cart':
+            if (isset($_SESSION['user_id'])) {
+                $user_id = $_SESSION['user_id'];
+            } else {
+                header("Location: index.php?act=login");
+            }
+            if (isset($_POST['addtocart'])) {
+                $product_id = $_POST['product_id'];
+                $product_name = $_POST['product_name'];
+                $image = $_POST['image'];
+                $price = $_POST['price'];
+                $size_id = $_POST['selectedsize'];
+                $color_id = $_POST['selectedcolor'];
+                $quantity = $_POST['quantity'];
+                $variant = load_variant($product_id, $color_id, $size_id);
+                $variant_id = $variant['variant_id'];
+                addtocart($quantity, $user_id, $variant_id);
+            }
+            $carts = load_cart($user_id);
+            include "view/cart.php";
+            break;
+        case 'delcart':
+            if (isset($_GET['cart_id']) && $_GET['cart_id'] > 0 ) {
+                $cart_id = $_GET['cart_id'];
+                delcart($cart_id);
+            }
+            header("Location: index.php?act=cart");
             break;
         case 'info':
             $user_id = $_SESSION['user_id'];
@@ -195,8 +222,33 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/info/info.php";
             break;
         case 'changeinfo':
+            $pattern_phone = '/^(03[2-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/';
+            $pattern_email = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
             $user_id = $_SESSION['user_id'];
             $account = load_account_info($user_id);
+            if (isset($_POST['updateinfo'])) {
+                $index = 0;
+                $email = $_POST['email'];
+                $phone = $_POST['phone'];
+                $address = $_POST['address'];
+                if (!preg_match($pattern_email, $email)) { // check không đúng định dạng
+                    $index++;
+                    $error1 = "* Email không hợp lệ";
+                }
+                if (!preg_match($pattern_phone, $phone)) { // check không đúng định dạng
+                    $index++;
+                    $error2 = "* Số điện thoại không hợp lệ";
+                }
+
+                if (isset($address) && $address == "") {
+                    $index++;
+                    $error3 = '* Vui lòng nhập địa chỉ';
+                }
+                if ($index == 0) {
+                    changeinfo($user_id, $email, $phone, $address);
+                    header("Location: index.php?act=info&changeinfotc");
+                }
+            }
             include "view/info/changeinfo.php";
             break;
         case 'oders':

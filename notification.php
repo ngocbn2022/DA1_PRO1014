@@ -39,7 +39,7 @@
         });
     </script>
 <?php } ?>
-<?php if (isset($_GET['changinfotc'])) { ?>
+<?php if (isset($_GET['changeinfotc'])) { ?>
     <script>
         Swal.fire({
             icon: "success",

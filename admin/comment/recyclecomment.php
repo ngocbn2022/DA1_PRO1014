@@ -19,6 +19,7 @@
                             <th scope="col">ID sản phẩm</th>
                             <th scope="col">Nội dung</th>
                             <th scope="col">Thời gian</th>
+                            <th scope="col">Đánh giá</th>
                             <th scope="col">Thao tác</th>
                         </tr>
                     </thead>
@@ -32,9 +33,10 @@
                             <td><?=$product_id?></td>
                             <td><?=$content?></td>
                             <td><?=$time?></td>
+                            <td><?=$star?></td>
                             <td>
-                                <a href="index.php?act=restorecomment&comment_id=<?=$comment_id?>"><button type="button" class="btn btn-primary">Khôi phục</button></a>
-                                <a href="index.php?act=harddeletecomment&comment_id=<?=$comment_id?>"><button type="button" class="btn btn-danger">Xóa</button></a>
+                                <a href="index.php?act=restorecomment&comment_id=<?=$comment_id?>"><button type="button" class="btn btn-primary" onclick="return confirmrestore()">Khôi phục</button></a>
+                                <a href="index.php?act=harddeletecomment&comment_id=<?=$comment_id?>"><button type="button" class="btn btn-danger" onclick="return confirmdelete()">Xóa</button></a>
                             </td>
                         </tr>
                         <?php }?>
