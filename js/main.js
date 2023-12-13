@@ -26,7 +26,7 @@
             menu.style.position = "fixed"; // Sử dụng thuộc tính .style để thiết lập kiểu dáng
             menu.style.top = "0";
             menu.style.width = "100%";
-        } else if (scrollY > 0 && scrollY < 450){
+        } else if (scrollY > 0 && scrollY < 450) {
             menu.style.top = "-300px";
         }
         else {
@@ -100,20 +100,86 @@
 
 
     // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
+    // $('.quantity button').on('click', function () {
+    //     var button = $(this);
+    //     var oldValue = button.parent().parent().find('input').val();
+    //     if (button.hasClass('btn-plus')) {
+    //         var newVal = parseFloat(oldValue) + 1;
+    //     } else {
+    //         if (oldValue > 0) {
+    //             var newVal = parseFloat(oldValue) - 1;
+    //         } else {
+    //             newVal = 0;
+    //         }
+    //     }
+    //     button.parent().parent().find('input').val(newVal);
+    // });
+
+    $(document).ready(function () {
+        // Xử lý sự kiện khi người dùng chọn size
+        $('input[name="size"]').on('change', function () {
+            var selectedSize = $('input[name="size"]:checked').val();
+            // Gán giá trị vào trường input có id="selectedSize"
+            $('.selectedSize').val(selectedSize);
+        });
+        // Xử lý sự kiện khi người dùng chọn rate
+        $('input[name="rate"]').on('change', function () {
+            var selectedRate = $('input[name="rate"]:checked').val();
+            // Gán giá trị vào trường input có id="selectedRate"
+            $('#selectedRate').val(selectedRate);
+        });
+
+        // Xử lý sự kiện khi người dùng chọn màu sắc
+        $('input[name="color"]').on('change', function () {
+            var selectedColor = $('input[name="color"]:checked').val();
+            // Gán giá trị vào trường input có id="selectedColor"
+            $('.selectedColor').val(selectedColor);
+        });
+        $('input[name="quantity"]').val(1);
+        $('#selectedQuantity').val(1);
+        // Xử lý sự kiện khi người dùng thay đổi số lượng
+        $('.btn-minus, .btn-plus').on('click', function () {
+            var quantityInput = $('input[name="quantity"]');
+            var currentQuantity = parseInt(quantityInput.val());
+
+            if ($(this).hasClass('btn-minus')) {
+                // Giảm số lượng khi nhấn nút -
+                currentQuantity = Math.max(currentQuantity - 1, 1);
             } else {
-                newVal = 0;
+                // Tăng số lượng khi nhấn nút +
+                currentQuantity++;
             }
-        }
-        button.parent().parent().find('input').val(newVal);
+
+            // Cập nhật giá trị vào trường input và input ẩn số lượng
+            quantityInput.val(currentQuantity);
+            $('#selectedQuantity').val(currentQuantity);
+        });
     });
 
 })(jQuery);
+
+
+getColorIds();
+function confirmdelete() {
+    return confirm("Bạn có chắc muốn xóa không ?");
+};
+function confirmrestore() {
+    return confirm("Bạn có chắc muốn khôi phục không ?");
+};
+function cofirmchapnhan() {
+    return confirm("Bạn có chắc chắn xác nhận đơn hàng này không ?");
+};
+
+function cofirmhuy() {
+    return confirm("Bạn có chắc chắn hủy đơn hàng này không ?");
+};
+
+function cofirmcapquyen() {
+    return confirm("Bạn có chắc chắn cấp quyền người này không ?");
+};
+
+function cofirmhaquyen() {
+    return confirm("Bạn có chắc chắn hạ quyền người này không ?");
+};
+
 

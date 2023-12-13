@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$dirt = 'image/';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <?php
-    echo 'abc';
-    ?>
-
-</body>
-
-</html>
+$url = "$_SERVER[REQUEST_URI]";
